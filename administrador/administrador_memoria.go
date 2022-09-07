@@ -13,8 +13,7 @@ Para quien le interese, dejamos una equivalencia de estas funciones a las de C:
 - PedirMemoria y PedirArreglo: malloc
 - RedimensionarMemoria: realloc
 - LiberarMemoria y LiberarArreglo: free
-- Finalizar: no hay (debemos usar otros programas adicionales ue hacen algo similar a lo que planteamos en
-esta librería, como es Valgrind).
+- Finalizar: no hay (debemos usar otros programas adicionales que hacen algo similar a lo que planteamos en esta librería, como es Valgrind).
 */
 
 import (
@@ -34,6 +33,7 @@ var _pedidos = make(map[any]*info)
 // PedirMemoria nos simula el pedido de memoria del heap que se le hace al sistema operativo para almacenar
 // un tipo de dato dado. Lo que se pida con esta función debe liberarse con LiberarMemoria. Si no se libera,
 // fallará luego al invocarse Finalizar
+/*----------1--------------------*/
 func PedirMemoria[T any]() *T {
 	mem := new(T)
 	_pedidos[mem] = &info{stack: debug.Stack(), len: int(unsafe.Sizeof(mem)), previo: nil}
@@ -43,6 +43,7 @@ func PedirMemoria[T any]() *T {
 // PedirArreglo es símil a PedirMemoria pero en vez de pedir memoria del heap para un dato, lo hace para un arreglo
 // del tipo indicado. Esta memoria puede luego redimensionarse con RedimensionarMemoria, y eventualmente debe ser
 // liberada con LiberarArreglo. Si no se libera, fallará luego al invocarse Finalizar.
+/*----------2--------------------*/
 func PedirArreglo[T any](n int) *[]T {
 	mem := make([]T, n)
 	_pedidos[&mem] = &info{stack: debug.Stack(), len: n * int(unsafe.Sizeof(new(T))), previo: nil}
@@ -50,6 +51,8 @@ func PedirArreglo[T any](n int) *[]T {
 }
 
 // LiberarMemoria libera la memoria del heap pedida
+
+/*----------4--------------------*/
 func LiberarMemoria[T any](dato *T) {
 	_, ok := _pedidos[dato]
 	if !ok {
@@ -59,6 +62,7 @@ func LiberarMemoria[T any](dato *T) {
 }
 
 // LiberarArreglo (como LiberarMemoria) libera la memoria del heap pedida
+/*----------5--------------------*/
 func LiberarArreglo[T any](datos *[]T) {
 	_, ok := _pedidos[datos]
 	if !ok {
@@ -69,6 +73,7 @@ func LiberarArreglo[T any](datos *[]T) {
 
 // RedimensionarMemoria permite cambiar el tamaño de la memoria pedida anteriormente. Puede ser más grande o más chica.
 // Se copian todos los valores que entren de los datos anteriores al arreglo actual.
+/*----------3--------------------*/
 func RedimensionarMemoria[T any](datos *[]T, nuevoTam int) *[]T {
 	ptr := PedirArreglo[T](nuevoTam)
 	copy(*ptr, *datos)
@@ -91,6 +96,7 @@ func (i info) imprimirInfo(org bool) {
 // Finalizar chequea que no haya quedado ninguna porción de memoria pedida sin haberse liberado. Si hay memoria
 // sin liberar, mostrará un mensaje con el stacktrace del camino donde se pidió exactamente esa memoria, a fin
 // de debuggear y poder encontrar una solución
+/*----------7--------------------*/
 func Finalizar() {
 	if len(_pedidos) == 0 {
 		return
