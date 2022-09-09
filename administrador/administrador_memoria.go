@@ -10,10 +10,11 @@ Sin mayores problemas. Esta entrega está pensada únicamente para practicar un 
 (hasta tanto salga el plan nuevo) y empezar a ver un poco de manejo de estructuras en Go.
 
 Para quien le interese, dejamos una equivalencia de estas funciones a las de C:
-- PedirMemoria y PedirArreglo: malloc
-- RedimensionarMemoria: realloc
-- LiberarMemoria y LiberarArreglo: free
-- Finalizar: no hay (debemos usar otros programas adicionales que hacen algo similar a lo que planteamos en esta librería, como es Valgrind).
+
+- PedirMemoria    y  PedirArreglo     : malloc
+- RedimensionarMemoria                : realloc
+- LiberarMemoria   y  LiberarArreglo  : free
+- Finalizar                           : no hay (debemos usar otros programas adicionales que hacen algo similar a lo que planteamos en esta librería, como es Valgrind).
 */
 
 import (

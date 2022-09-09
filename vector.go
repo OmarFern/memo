@@ -27,16 +27,20 @@ func (vector *Vector) Redimensionar(tam_nuevo int) {
 
 // Destruir Destruye la memoria asociada al vector
 func (vector *Vector) Destruir() { 
-	
+	 administrador.LiberarArreglo(vector.datos)
+	 administrador.LiberarMemoria(vector)
+	 	 	
 	/*completar*/
 
 }
 
 // Largo devuelve el largo de este vector
 func (vector Vector) Largo() int {
+	largo:=len(*vector.datos)
+	return largo
 
 	/*completar*/
-	return 0
+
 
 }
 
@@ -44,6 +48,14 @@ func (vector Vector) Largo() int {
 // Si no es válida, entonces entra en pánico con un mensaje "Fuera de rango".
 func (vector *Vector) Guardar(pos int, elem int) {
 	/*completar*/
+	
+	if (pos <0)||(pos>= vector.Largo()) {
+		panic("Fuera de rango")
+  } else{
+
+	 (*vector.datos)[pos]=elem
+   }
+
 
 }
 
@@ -51,5 +63,10 @@ func (vector *Vector) Guardar(pos int, elem int) {
 // Si no es válida, entonces entra en pánico con un mensaje "Fuera de rango".
 func (vector Vector) Obtener(pos int) int {
 	/*completar*/
-	return 0
+	if (pos <0)||(pos>= vector.Largo()) {
+		panic("Fuera de rango")
+  } else{
+	  return (*vector.datos)[pos]
+    }
+
 }
