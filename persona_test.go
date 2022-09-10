@@ -16,9 +16,9 @@ func TestPersonaConUnHijoYUnNieto(t *testing.T) {
 	per := Persona.CrearPersona("Abuelo", nil)
 	Persona.CrearPersona("Nieto", Persona.CrearPersona("hijo", per))
 	per.Destruir()
-	//administrador.Finalizar()
+	administrador.Finalizar()
 }
-/*
+
 func TestConVariosHijosYNietos(t *testing.T) {
 	estanislao := Persona.CrearPersona("Estanislao", nil)
 	jolanta := Persona.CrearPersona("Jolanta", estanislao)
@@ -27,4 +27,4 @@ func TestConVariosHijosYNietos(t *testing.T) {
 	Persona.CrearPersona("Marcelina", Persona.CrearPersona("Igor", Persona.CrearPersona("Cristofer", estanislao)))
 	estanislao.Destruir()
 	administrador.Finalizar()
-}*/
+}

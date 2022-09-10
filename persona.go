@@ -46,12 +46,18 @@ func (per *Persona) Imprimir() {
 
 // Destruir libera la memoria (simulada) de esta Persona y todos sus descendientes
 func (per *Persona) Destruir() {
-   
+	if (per.hij_menor!=nil){
+		per.hij_menor.Destruir()
+	}
+    if (per.hij_mayor!=nil){
+		per.hij_mayor.Destruir()
+
+	}
 
 	administrador.LiberarMemoria(per)
 
 
 
-	/*completar*/
+
 
 }
